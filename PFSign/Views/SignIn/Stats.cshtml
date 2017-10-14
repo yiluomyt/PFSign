@@ -1,0 +1,66 @@
+﻿@{ 
+    ViewData["Title"] = "签到统计";
+}
+<h2>签到统计</h2>
+
+<form class="form-inline" method="get">
+    <div class="form-group">
+        <label for="Start" class="control-label">起始时间：</label>
+        <input id="Start" name="start" type="date" class="form-control" value="@ViewBag.Start?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="End" class="control-label">截止时间：</label>
+        <input id="End" name="end" type="date" class="form-control" value="@ViewBag.End.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="查询" class="btn btn-default" />
+    </div>
+</form>
+<hr />
+
+<div id="stats"></div>
+
+@section Scripts { 
+    <!--G2 chart-->
+    <script src="https://a.alipayobjects.com/g/datavis/g2/2.3.9/index.js"></script>
+    <script>
+        $.getJSON('/SignIn/SignInStats/', { start: $('#Start').val(), end: $('#End').val() },
+            function (data) {
+                if (data.length == 0) {
+                    $('#stats').text('暂无数据！');
+                    return;
+                }
+                var Stat = G2.Stat;
+                var Frame = G2.Frame;
+                var frame = new Frame(data);
+                frame = Frame.sort(frame, 'num'); // 将数据按照population 进行排序，由大到小
+                var chart = new G2.Chart({
+                    id: 'stats',
+                    forceFit: true,
+                    height: 600,
+                    plotCfg: {
+                        margin: [20, 60, 20, 60]
+                    }
+                });
+                chart.source(frame);
+                chart.axis('name', {
+                    title: null,
+                });
+                chart.col('name', {
+                    alias: '姓名'
+                });
+                chart.legend('name', false);
+                chart.coord('rect').transpose();
+                chart.interval().position('name*num').color('name').label('num');
+                chart.render();
+                chart.on('plotclick', function (ev) {
+                    var data = ev.data;
+                    if (data) {
+                        var name = data._origin['name']
+                        window.open('/SignIn/Details/?name=' + name);
+                    }
+                });
+            }
+        )
+    </script>
+}

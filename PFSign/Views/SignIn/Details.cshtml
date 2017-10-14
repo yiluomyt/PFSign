@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PFSign.Data.SignIn>
+@{
+    ViewData["Title"] = "签到查询";
+}
+<h2>签到查询</h2>
+
+<h4 class="text-info">@ViewBag.Name</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Time.ToLocalTime()
+                </td>
+                <td>
+                    @item.Seat
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

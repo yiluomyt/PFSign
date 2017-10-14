@@ -1,0 +1,32 @@
+﻿@model Dictionary<int, string>
+
+<div>
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="row">
+            @for (int j = 1; j <= 6; j++)
+            {
+                int num = i * 6 + j;
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                    @if (Model.TryGetValue(num, out string name))
+                    {
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                @name
+                            </strong>
+                        </button>
+                    }
+                    else
+                    {
+                        <button data-seat="@num" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: @num
+                            </strong>
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+        <hr />
+    }
+</div>
