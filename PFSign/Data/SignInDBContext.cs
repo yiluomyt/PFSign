@@ -20,6 +20,7 @@ namespace PFSign.Data
     {
         public int ID { get; set; }
         [Display(Name = "姓名")]
+        [StringLength(6, ErrorMessage = "{0}不超过{1}个字符！")]
         [Required(ErrorMessage = "姓名必填！")]
         [Remote("PersonExists", "SignIn", ErrorMessage = "你今天已签到！")]
         public string Name { get; set; }
