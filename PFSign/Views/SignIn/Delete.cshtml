@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Time)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Time)
+            @Model.Time.ToLocalTime()
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Seat)

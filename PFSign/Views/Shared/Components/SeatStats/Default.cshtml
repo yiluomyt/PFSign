@@ -27,6 +27,13 @@
                 </div>
             }
         </div>
-        <hr />
+        @if (i%2 == 1)
+        {
+            <hr />
+        }
+        else
+        {
+            <hr class="hidden-lg hidden-md" />
+        }
     }
 </div>

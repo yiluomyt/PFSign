@@ -81,7 +81,7 @@ namespace PFSign.Controllers
         {
             if (ModelState.IsValid)
             {
-                signIn.Time = DateTime.Now;
+                signIn.Time = DateTime.UtcNow;
                 _context.Add(signIn);
                 await _context.SaveChangesAsync();
                 CookieOptions cookieOptions = new CookieOptions()
@@ -128,6 +128,7 @@ namespace PFSign.Controllers
 
         public IActionResult Stats(DateTime? start = null, DateTime? end = null)
         {
+            ViewBag.Start = start;
             ViewBag.End = end ?? DateTime.Today;
             return View();
         }
