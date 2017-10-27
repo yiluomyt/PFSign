@@ -1,6 +1,6 @@
 using System;
 
-namespace PFSign.Models
+namespace PFSign.ViewModels
 {
     public class ErrorViewModel
     {

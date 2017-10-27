@@ -28,7 +28,7 @@ namespace PFSign
                     => options.UseSqlite("Data Source=User.db"));
 #else
             services.AddDbContext<SignInDBContext>(options
-                    => options.UseSqlServer(Configuration.GetValue<string>("SQLSERVER")));
+                    => options.UseSqlServer(Configuration.GetValue<string>("SQLSERVERTX")));
 #endif
             services.AddMvc();
         }
