@@ -1,0 +1,84 @@
+﻿@model SummaryViewModel
+@{
+    ViewData["Title"] = "一周报表";
+    int compare = Math.Abs(Model.ThisWeekCount - Model.LastWeekCount);
+}
+
+<div class="jumbotron">
+    <div class="container">
+            <h1>欢迎查看本周签到报表</h1>
+            <p>报表时间</p>
+            <p>
+                From
+                <text class="text-info">@Model.StartDate.ToLocalTime().ToLongDateString()</text>
+                &nbsp;To&nbsp;
+                <text class="text-info">@Model.EndDate.ToLocalTime().ToLongDateString()</text>
+            </p>
+    </div>
+</div>
+
+<h2>签到次数最多</h2>
+<p class="lead">
+    本周签到次数最多的签到了<strong class="text-danger">@Model.MaxCount</strong>次！
+</p>
+<ul class="list-inline">
+    @foreach (var name in Model.MaxSigned)
+    {
+        <li><a asp-action="Details" asp-route-name="@name">@name</a></li>
+    }
+</ul>
+<hr />
+
+<h2>时间段统计</h2>
+<div id="timestats"></div>
+<hr />
+
+<h2>本周签到次数较少的名单</h2>
+<div class="col-md-offset-4 col-lg-offset-4 pre-scrollable">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>姓名</td>
+                <td>签到次数</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.BadSigned)
+            {
+                <tr>
+                    <td>@p.Key</td>
+                    <td>@p.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<hr />
+
+<h2>与上周对比</h2>
+<div class="col-md-offset-1 col-lg-offset-1">
+    <p class="lead">本周签到人次为<strong class="text-primary">@Model.ThisWeekCount</strong>,</p>
+</div>
+<div class="col-md-offset-2 col-lg-offset-2">
+    <p class="lead">上周签到人次为<strong class="text-info">@Model.LastWeekCount</strong>,</p>
+</div>
+<div class="col-md-offset-3 col-lg-offset-3">
+    @if (Model.ThisWeekCount > Model.LastWeekCount)
+    {
+        <p class="lead">增长了<strong class="text-danger">@compare</strong>人次!</p>
+    }
+    else
+    {
+        <p class="lead">减少了<strong class="text-danger">@compare</strong>人次!</p>
+    }
+</div>
+
+@section Scripts{ 
+<!--G2 chart-->
+<script src="https://a.alipayobjects.com/g/datavis/g2/2.3.9/index.js"></script>
+<script src="~/js/summarychart.min.js"></script>
+<script>
+    var timeData = @Json.Serialize(Model.TimeStats);
+    timestats(timeData, 'timestats');
+</script>
+}
