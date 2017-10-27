@@ -37,7 +37,7 @@
                 var chart = new G2.Chart({
                     id: 'stats',
                     forceFit: true,
-                    height: 600,
+                    height: data.length < 24 ?600: data.length*25,
                     plotCfg: {
                         margin: [20, 60, 20, 60]
                     }
