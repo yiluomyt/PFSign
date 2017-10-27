@@ -5,4 +5,4 @@
 * WEB： ASP.NET Core 2.0
 * ORM: EntityFramework Core
 * UI: Bootstrap 3.3.7 jquery 2.2.0
-* 数据库： Sqlite3
+* 数据库： Sql server(生产), sqlite3（测试)
